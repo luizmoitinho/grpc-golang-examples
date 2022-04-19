@@ -4,7 +4,7 @@
 // - protoc             v3.19.4
 // source: dummy.proto
 
-package grpc_simple
+package proto
 
 import (
 	grpc "google.golang.org/grpc"
