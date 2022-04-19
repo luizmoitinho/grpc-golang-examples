@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package grpc_simple;
+
+option go_package = "github.com/luizmoitinho/grpc-golang-examples/grpc_simple";
+
+//generate proto: protoc -Igrpc_simple/proto --go_out=. --go-grpc_out=. grpc_simple/proto/dummy.proto
+
+message Dummy{
+    uint32 id = 1;
+}
+
+service DummyService {
+
+}
