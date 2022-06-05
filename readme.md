@@ -18,7 +18,7 @@ go mod tidy
 ```shell
 make <name_project>
 ```
-> Example ``make grpc_simple``
+> Example ``make greet``
 
 or
 
