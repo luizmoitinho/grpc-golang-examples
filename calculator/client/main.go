@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"log"
 
 	pb "github.com/luizmoitinho/grpc-golang-examples/calculator/proto"
@@ -19,20 +18,6 @@ func main() {
 	defer conn.Close()
 
 	client := pb.NewCalculatorServiceClient(conn)
-	DoSum(client)
-}
-
-func DoSum(c pb.CalculatorServiceClient) {
-	log.Println("DoSum was invoked")
-	input := &pb.CalculatorRequest{
-		FirstNumber:  10,
-		SecondNumber: 20,
-	}
-	res, err := c.Sum(context.Background(), input)
-
-	if err != nil {
-		log.Fatalf("Could not Sum: %v", err)
-	}
-
-	log.Printf("Sum: %d + %d = %d", input.FirstNumber, input.SecondNumber, res.Result)
+	//DoSum(client)
+	DoPrimes(client)
 }
