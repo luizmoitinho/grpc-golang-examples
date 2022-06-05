@@ -56,3 +56,29 @@ func (s *Server) Avg(stream pb.CalculatorService_AvgServer) error {
 		counterValues++
 	}
 }
+
+func (s *Server) Max(stream pb.CalculatorService_MaxServer) error {
+	log.Println("Max was invoked")
+	maxNumber := int32(0)
+
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			return nil
+		}
+		if err != nil {
+			log.Fatalf("Error while reading client straming: %v", err)
+		}
+
+		if req.Number > maxNumber {
+			maxNumber = req.Number
+			err := stream.Send(&pb.MaxResponse{
+				Result: maxNumber,
+			})
+			if err != nil {
+				log.Fatalf("Error while sending data to client: %v", err)
+			}
+		}
+
+	}
+}
