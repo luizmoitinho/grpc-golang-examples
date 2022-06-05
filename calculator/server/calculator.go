@@ -2,6 +2,8 @@ package main
 
 import (
 	"context"
+	"fmt"
+	"io"
 	"log"
 
 	pb "github.com/luizmoitinho/grpc-golang-examples/calculator/proto"
@@ -29,4 +31,28 @@ func (s *Server) Primes(in *pb.CalculatorPrimesRequest, stream pb.CalculatorServ
 		}
 	}
 	return nil
+}
+
+func (s *Server) Avg(stream pb.CalculatorService_AvgServer) error {
+	fmt.Println("Avg function was invoked")
+	var sumValues float64 = 0
+	var counterValues int32 = 0
+
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			return stream.SendAndClose(
+				&pb.AvgResponse{
+					Result: sumValues / float64(counterValues),
+				},
+			)
+		}
+		if err != nil {
+			log.Fatalf("Error while reading client stream: %v", err)
+		}
+
+		log.Printf("Receiving: %v\n", req)
+		sumValues += float64(req.Number)
+		counterValues++
+	}
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 	"io"
 	"log"
+	"time"
 
 	pb "github.com/luizmoitinho/grpc-golang-examples/calculator/proto"
 )
@@ -46,4 +47,31 @@ func DoPrimes(c pb.CalculatorServiceClient) {
 		log.Printf("%d ", msg.Result)
 	}
 
+}
+
+func DoAvg(c pb.CalculatorServiceClient) {
+	log.Println("DoAvg was invoked")
+	reqs := []*pb.AvgRequest{
+		{Number: 1},
+		{Number: 2},
+		{Number: 3},
+		{Number: 4},
+	}
+
+	stream, err := c.Avg(context.Background())
+	if err != nil {
+		log.Fatalf("Erro while calling Avg: %v", err)
+	}
+
+	for _, req := range reqs {
+		log.Printf("Sending req: %v", req)
+		stream.Send(req)
+		time.Sleep(1 * time.Second)
+	}
+
+	res, err := stream.CloseAndRecv()
+	if err != nil {
+		log.Fatalf("Error while receiving response from Avg: %v\n", err)
+	}
+	log.Printf("Avg: %f\n", res.Result)
 }
