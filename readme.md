@@ -20,4 +20,9 @@ make <name_project>
 ```
 > Example ``make grpc_simple``
 
+or
+
+```shell
+protoc -Igreet/proto --go_out=. --go_opt=module=github.com/luizmoitinho/grpc-golang-examples  --go-grpc_out=. --go-grpc_opt=module=github.com/luizmoitinho/grpc-golang-examples greet/proto/dummy.proto
+```
 ---

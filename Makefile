@@ -37,33 +37,33 @@ else
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: grpc_simple blog calculator help
-project := grpc_simple calculator blog
+.PHONY: greet blog calculator help
+project := greet calculator blog
 
 all: $(project) ## Generate Pbs and build
 
-grpc_simple: $@ ## Generate Pbs and build for grpc_simple
+greet: $@ ## Generate Pbs and build for greet
 calculator: $@ ## Generate Pbs and build for calculator
 blog: $@ ## Generate Pbs and build for blog
 
 $(project):
 	@${CHECK_DIR_CMD}
 	protoc -I$@/${PROTO_DIR} --go_opt=module=${PACKAGE} --go_out=. --go-grpc_opt=module=${PACKAGE} --go-grpc_out=. $@/${PROTO_DIR}/*.proto
-	go build -o ${BIN_DIR}/$@/${CLIENT_BIN} ./$@/${CLIENT_DIR}
 	go build -o ${BIN_DIR}/$@/${SERVER_BIN} ./$@/${SERVER_DIR}
+	go build -o ${BIN_DIR}/$@/${CLIENT_BIN} ./$@/${CLIENT_DIR}
 
 test: all ## Launch tests
 	go test ./...
 
-clean: clean_grpc_simple clean_calculator clean_blog ## Clean generated files
+clean: clean_greet clean_calculator clean_blog ## Clean generated files
 	${RM_F_CMD} ssl/*.crt
 	${RM_F_CMD} ssl/*.csr
 	${RM_F_CMD} ssl/*.key
 	${RM_F_CMD} ssl/*.pem
 	${RM_RF_CMD} ${BIN_DIR}
 
-clean_grpc_simple: ## Clean generated files for grpc_simple
-	${RM_F_CMD} grpc_simple/${PROTO_DIR}/*.pb.go
+clean_greet: ## Clean generated files for greet
+	${RM_F_CMD} greet/${PROTO_DIR}/*.pb.go
 
 clean_calculator: ## Clean generated files for calculator
 	${RM_F_CMD} calculator/${PROTO_DIR}/*.pb.go
