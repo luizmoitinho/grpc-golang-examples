@@ -8,7 +8,7 @@ This repository contains implementations of types of API in gRPC: Unary, Server 
 1. Clone the repository
 2. Enter into project folder
 ```shell
-cd grpc_go_course
+cd grpc-golang-examples
 ```
 3. Update dependencies
 ```shell
