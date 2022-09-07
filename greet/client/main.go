@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	pb "github.com/luizmoitinho/grpc-golang-examples/greet/proto"
 	"google.golang.org/grpc"
@@ -21,5 +22,9 @@ func main() {
 	//DoGreet(client)
 	//DoGreetManyTimes(client)
 	//DoLongGreet(client)
-	DoGreetEveryone(client)
+	//DoGreetEveryone(client)
+
+	//DoGreetWithDeadline(client, 5*time.Second)
+	DoGreetWithDeadline(client, 1*time.Second) // should be return a deadline error
+
 }
