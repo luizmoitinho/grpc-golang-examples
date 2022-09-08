@@ -8,7 +8,7 @@ import (
 )
 
 func DoGreet(c pb.GreetServiceClient) {
-	log.Println("doGreet  was invoked")
+	log.Println("doGreet was invoked")
 	res, err := c.Greet(context.Background(), &pb.GreetRequest{
 		FirstName: "Luiz Carlos",
 	})
